@@ -1,0 +1,4 @@
+﻿  main.cpp
+E:\leetcode\Module\modules\src\KMP\RandomInput.h(37,47): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\leetcode\Module\modules\src\KMP\KMP_solution.h(68,48): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  KMP.vcxproj -> E:\leetcode\Module\modules\build\Debug\KMP.exe
