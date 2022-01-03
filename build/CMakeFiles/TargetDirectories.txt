@@ -1,4 +1,5 @@
 E:/leetcode/Module/modules/build/CMakeFiles/KMP.dir
 E:/leetcode/Module/modules/build/CMakeFiles/BackTrack.dir
+E:/leetcode/Module/modules/build/CMakeFiles/Tree.dir
 E:/leetcode/Module/modules/build/CMakeFiles/ALL_BUILD.dir
 E:/leetcode/Module/modules/build/CMakeFiles/ZERO_CHECK.dir

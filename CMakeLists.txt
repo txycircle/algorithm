@@ -17,3 +17,9 @@ add_executable(BackTrack
  src/BackTrack/BackTrack_solution.h
  src/BackTrack/RandomInput.h
 )
+
+add_executable(Tree
+ src/Tree/main.cpp
+ src/Tree/Tree.h
+src/Tree/Tree.cpp
+)

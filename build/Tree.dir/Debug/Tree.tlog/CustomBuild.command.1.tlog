@@ -1,0 +1,10 @@
+^E:\LEETCODE\MODULE\MODULES\CMAKELISTS.TXT
+setlocal
+C:\Users\1\Anaconda3\Lib\site-packages\cmake\data\bin\cmake.exe -SE:/leetcode/Module/modules -BE:/leetcode/Module/modules/build --check-stamp-file E:/leetcode/Module/modules/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
