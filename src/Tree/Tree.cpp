@@ -3,6 +3,8 @@
 
 void Tree::PreOrder_ser(vector<string> node_value,  TreeNode* node_pre)
 //宽度优先搜索反序列化二叉树
+//层序遍历，对每一层的划分要通过deque的size进行划分。LEETCODE 102，107，116，117，199，637，429，515，104，111
+//LEETCODE 104 也可以采用深度优先搜索
 {
 	deque<TreeNode*> dq;
 	int i = 0;
@@ -44,6 +46,67 @@ void Tree::PreOrder_ser(vector<string> node_value,  TreeNode* node_pre)
 
 
 
+
+void Tree::generate_tree_pre_in(vector<string> node_pre_value, vector<string> node_in_value)
+{
+	root = generate_tree_pre_in_child(node_pre_value, node_in_value, 0, node_pre_value.size() - 1, 0, node_in_value.size() - 1);
+}
+TreeNode* generate_tree_pre_in_child(vector<string> node_pre_value, vector<string> node_in_value, int pre_begin, int pre_end, int in_begin, int in_end)
+{
+	//leetcode 105,106
+	//LEETCODE 654分组的方式构建二叉树，注意分组的区间划分，以及终止条件。
+	if (pre_begin > node_pre_value.size() - 1 || pre_end < pre_begin) return nullptr;
+	TreeNode* node = new TreeNode();
+	node->value = node_pre_value[pre_begin];
+	if (pre_end == pre_begin) return node;
+	else
+	{
+		int i = in_begin;
+		for (; i <= in_end; ++i)
+		{
+			if (node_in_value[i] == node_pre_value[pre_begin])
+				break;
+		}
+		node->left = generate_tree_pre_in_child(node_pre_value, node_in_value, pre_begin + 1, pre_begin + i - in_begin, in_begin, i - 1);
+		node->right = generate_tree_pre_in_child(node_pre_value, node_in_value, pre_begin + i - in_begin + 1, pre_end, i+1, in_end);
+	}
+	return node;
+}
+
+
+
+
+void Tree::generate_tree_post_in(vector<string> node_post_value, vector<string> node_in_value)
+{
+	root = generate_tree_post_in_child(node_post_value, node_in_value, 0, node_post_value.size() - 1, 0, node_in_value.size() - 1);
+}
+TreeNode* generate_tree_post_in_child(vector<string> node_post_value, vector<string> node_in_value, int post_begin, int post_end, int in_begin, int in_end)
+{
+	if (post_end > node_post_value.size() - 1 || post_end < post_begin) return nullptr;
+	TreeNode* node = new TreeNode();
+	node->value = node_post_value[post_end];
+	if (post_end == post_begin) return node;
+	else
+	{
+		int i = in_begin;
+		for (; i <= in_end; ++i)
+		{
+			if (node_in_value[i] == node_post_value[post_end])
+				break;
+		}
+		int right_length = in_end-i;
+		
+		node->right = generate_tree_post_in_child(node_post_value, node_in_value, post_end- right_length, post_end-1, i+1,in_end);
+		node->left = generate_tree_post_in_child(node_post_value, node_in_value, post_begin , post_end - right_length-1, in_begin, i-1);
+	}
+	return node;
+}
+
+
+
+
+
+
 void PreOrder_map(string& str, TreeNode* node)
 {
 	if (node == NULL)return;
@@ -71,7 +134,7 @@ string Tree::PreOrder()
 string Tree::PreOrder_stk()
 {
 
-	//先序 栈实现
+	//先序 栈实现   LEETCODE 572
 	string str;
 	stack<TreeNode*> stk;
 	TreeNode* node = root;
@@ -113,7 +176,7 @@ void InOrder_map(string& str, TreeNode* node)
 
 string Tree::InOrder()
 {
-	//中序遍历;递归
+	//中序遍历;递归 leetcode 226 翻转二叉树 不能采用中序遍历处理，否则会重复计算，在选择遍历方式的时候要注意这些问题。
 	string str;
 	TreeNode* node = root;
 
@@ -170,6 +233,9 @@ void PastOrder_map(string& str, TreeNode* node)
 string Tree::PastOrder()
 {
 	//后序遍历：递归
+	//leetcode 226 翻转二叉树
+	//leetcode 101 对称二叉树可以通过翻转前后的二叉树是否相同来判断是否对称
+	//leetcode 104 求解二叉树深度、高度，而根节点的高度就是二叉树的最大深度
 	string str;
 	TreeNode* node = root;
 	
@@ -225,7 +291,7 @@ int string_to_int(string input)
 }
 bool Tree::isValidBST() {
 	//方法一:递归，这里搜索树的值为int类型
-	//方法二：二叉搜索树中序遍历是单调递增的序列 。。相关leetcode 95,96,98
+	//方法二：二叉搜索树中序遍历是单调递增的序列 。。相关leetcode 95,96,98,530
 	//有序表相关：
 	if (root == nullptr) return true;
 	else
@@ -313,6 +379,7 @@ bool Tree::isCompleteTree() {
 }
 
 
+
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 	//最近公共祖先（背）
 	//（优化）遍历每一个子树的左子树和右子树中是否有目标节点，如果两个子树都有，则返回当前节点，否则返回其中不为空的一个子树的节点。
@@ -322,4 +389,25 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 	TreeNode* right = lowestCommonAncestor(root->right, p, q);
 	if (left != NULL && right != NULL) return root;
 	return left == NULL ? right : left;
+}
+
+TreeNode* lowestCommonAncestor_BST(TreeNode* root, TreeNode* p, TreeNode* q) {
+	//最近公共祖先,二叉搜索树（背）用数据大小来框定数据的范围
+	if (root == nullptr) return root;
+	if (string_to_int(root->value) > string_to_int(p->value) && string_to_int(root->value) > string_to_int(q->value))
+	{
+		//在左子树
+		return lowestCommonAncestor_BST(root->left, p, q);
+	}
+	else
+	{
+		if (string_to_int(root->value) < string_to_int(p->value) && string_to_int(root->value) < string_to_int(q->value))
+		{
+			//在左子树
+			return lowestCommonAncestor_BST(root->right, p, q);
+		}
+		else
+			return root;
+	}
+
 }
