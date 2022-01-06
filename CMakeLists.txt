@@ -23,3 +23,9 @@ add_executable(Tree
  src/Tree/Tree.h
 src/Tree/Tree.cpp
 )
+
+add_executable(Sort
+ src/Sort/main.cpp
+ src/Sort/Heap.h
+src/Sort/Heap.cpp
+)

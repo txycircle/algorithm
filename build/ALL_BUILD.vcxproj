@@ -178,6 +178,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{E4D65723-FC72-3B73-9D30-AA999B0F4C6B}</Project>
       <Name>KMP</Name>
     </ProjectReference>
+    <ProjectReference Include="E:\leetcode\Module\modules\build\Sort.vcxproj">
+      <Project>{8CEC10CF-70C9-314E-886B-14E38AA76784}</Project>
+      <Name>Sort</Name>
+    </ProjectReference>
     <ProjectReference Include="E:\leetcode\Module\modules\build\Tree.vcxproj">
       <Project>{94D0B2D7-B1F5-3696-80EC-DB789C747274}</Project>
       <Name>Tree</Name>

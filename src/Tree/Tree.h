@@ -16,6 +16,12 @@ public:
 		right = NULL;
 		
 	};
+	TreeNode(string v)
+	{
+		left = NULL;
+		right = NULL;
+		value = v;
+	}
 
 	TreeNode* left;
 	TreeNode* right;
